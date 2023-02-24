@@ -14,6 +14,7 @@ export async function loadPost(id: string): Promise<Post | null> {
       body: render(body),
       date: new Date(params.date),
       excerpt: params.excerpt,
+      author: "Devoluty",
     };
 
     return post;

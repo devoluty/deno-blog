@@ -1,8 +1,8 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import Button from "../../islands/Button.tsx";
 import { loadPost } from "../../utils/posts.ts";
 import { CSS, render } from "https://deno.land/x/gfm@0.2.0/mod.ts";
 import { Head } from "$fresh/runtime.ts";
+import Header from "../../components/Header.tsx";
 
 // this executes before the next function
 export const handler: Handlers = {
@@ -20,12 +20,17 @@ export default function PagePost(props: PageProps) {
       <Head>
         <style dangerouslySetInnerHTML={{ __html: CSS }} />
       </Head>
-      <div class="m-4 p-5 rounded-lg bg-yellow-50 font-sans markdown-body">
-        <Button />
+      <Header />
+      <div class="md:m-32 sm:m-12 m-6 p-1 rounded-lg bg-yellow-50 font-sans markdown-body">
         <div dangerouslySetInnerHTML={{ __html: render(post.body) }}></div>
-        <time class="text-sm my-2 text-gray-700">
-          {Intl.DateTimeFormat("es").format(post.date)}
-        </time>
+        <footer>
+          <time class="text-sm my-2 text-gray-700">
+            {Intl.DateTimeFormat("es").format(post.date)}
+          </time>
+          <div class="text-sm font-sans">
+            <span>Author: {post.author}</span>
+          </div>
+        </footer>
       </div>
     </>
   );

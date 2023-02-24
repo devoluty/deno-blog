@@ -1,33 +1,21 @@
-import { Handlers, PageProps } from "$fresh/server.ts";
-import { listPosts } from "../utils/posts.ts";
-import { Post } from "../types.d.ts";
+import Header from "../components/Header.tsx";
 
-export const handler: Handlers = {
-  async GET(request, context) {
-    const posts = await listPosts();
-    return context.render({ posts });
-  },
-};
-
-export default function Home(props: PageProps) {
-  const { data } = props;
-  const { posts } = data ?? {};
-
+export default function Home() {
   return (
-    <div class="p-4">
-      <h1 class="text-gray-900 text-3xl">Deno Blog</h1>
-      <div class="py-5">
-        {posts.map(({ id, title, date }: Post) => (
-          <article key={id}>
-            <h2 class="font-bold text-lg hover:text-blue-900">
-              <a href={`/blog/${id}`}>{title}</a>
-            </h2>
-            <span class="text-gray-600 text-sm">
-              {Intl.DateTimeFormat("es").format(date)}
-            </span>
-          </article>
-        ))}
-      </div>
-    </div>
+    <>
+      <Header />
+      <body class="bg-gray-100">
+        <section
+          class="h-screen bg-center bg-cover flex items-center"
+          style="background-image: url('https://picsum.photos/1920/1080');"
+        >
+          <div class="container mx-auto px-4">
+            <h1 class="text-6xl font-bold text-white uppercase leading-tight text-center">
+              Deno Blog
+            </h1>
+          </div>
+        </section>
+      </body>
+    </>
   );
 }
