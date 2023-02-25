@@ -26,55 +26,80 @@ Or, if you have different python versions in your system
 pip3 install beautifulsoup4
 ```
 
+Alternatively, you can use [Google Collab](https://colab.research.google.com)
+for this tutorial. Regardless of the method you choose, you will need to import
+the following libraries:
+
+```python
+import requests
+from bs4 import BeautifulSoup
+```
+
 ## Step 2: Find the URL to Scrape
 
 The next step is to find the URL of the website that you want to scrape. Once
 you have the URL, you can use the `requests` library in Python to get the HTML
-content of the page. Here's an example:
+content of the page. In this tutorial, we will use
+[The Needle Drop Page](https://www.theneedledrop.com/), the blog of a well-known
+YouTuber.
 
 ```python
-import requests
-
-url = 'https://www.example.com'
-response = requests.get(url)
-content = response.content
+url = "https://www.theneedledrop.com/"
 ```
 
 ## Step 3: Parse the HTML with Beautiful Soup
 
 Now that you have the HTML content of the page, you can use Beautiful Soup to
-parse it and extract the data that you want. Here's an example:
+parse it and extract the data that you want.
 
 ```python
-from bs4 import BeautifulSoup
-
-soup = BeautifulSoup(content, 'html.parser')
-titles = soup.find_all('h2')
-for title in titles:
-    print(title.text)
+url = "https://www.theneedledrop.com/"
+response = requests.get(url)
+soup = BeautifulSoup(response.content, "html.parser")
 ```
 
-In this example, we're using Beautiful Soup to find all of the `<h2>` tags on
-the page and print their text.
+To verify that the code was executed correctly, you can use the `print(soup)`
+command to view the HTML content.
 
 ## Step 4: Save the Data
 
-Finally, you can save the data that you've scraped. This can be done in a
-variety of formats, such as a CSV file or a database. Here's an example of how
-to save the data to a CSV file:
+Finally, you can save the data that you have scraped in various formats, such as
+a CSV file or a database. In this example, we will simply display the
+information we want in the terminal.
+
+First, you will need to identify the information that you need in the HTML. In
+this example, we will scrape the track review section, where you can identify
+the `sqs-block-content` div, but it is easier to simply take the divs with the
+`meta-description` class because it is a unique class for track names. You will
+need to carefully examine the divs, HTML tags, classes, or IDs of the
+information you want in your page. To learn about the methods of different
+Beautiful Soup 4 functions, you can refer to the
+[documentation](https://beautiful-soup-4.readthedocs.io/en/latest/).
 
 ```python
-import csv
-
-with open('data.csv', 'w', newline='') as file:
-    writer = csv.writer(file)
-    writer.writerow(['Title'])
-    for title in titles:
-        writer.writerow([title.text])
+def get_tracks():
+  tracks = soup.find_all("div", class_="meta-description")
+  for track in tracks:
+    print(track.text)
+        
+get_tracks()
 ```
 
-In this example, we're using the csv library in Python to write the scraped data
-to a CSV file.
+In this example, we are displaying the text inside the track element, which is a
+`<p>` tag.
+
+You can also extract the album section by identifying the `summary-title-link`
+`<a>` tag, as it is unique in the HTML for albums and podcasts. In the following
+code, we take `albums[:5]` because they are the first five album elements.
+
+```python
+def get_albums():
+  albums = soup.find_all("a", class_="summary-title-link")
+  for album in albums[:5]:
+    print(album.text)
+
+get_albums()
+```
 
 ## Conclusion
 

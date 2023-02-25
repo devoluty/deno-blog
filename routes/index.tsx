@@ -11,7 +11,7 @@ export default function Home() {
         >
           <div class="container mx-auto px-4">
             <h1 class="text-6xl font-bold text-white uppercase leading-tight text-center">
-              Deno Blog
+              Simple Python
             </h1>
           </div>
         </section>
