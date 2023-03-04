@@ -20,7 +20,9 @@ author: Devolutyy
 Technologoies I want to learn (fullstack dev)
 
 - Fundamentals (web apps, programming, backend)
+- Javascript
 - Typescript
+- Expressjs
 - Mariadb
 - Prisma (ORM)
 - Testing
